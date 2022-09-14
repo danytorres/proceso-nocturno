@@ -1,14 +1,17 @@
 import mysql.connector
-from env import *
+from nocturno.settings import env
+from nocturno.helpers.script_sql import ScriptActualizado
 
-def mysql_consultor(script):
+def mysql_consultor(fecha):
+
+    script = ScriptActualizado(fecha)
     try:
         conn = mysql.connector.connect(
-            host=ENDPOINT,
-            user=USER,
-            passwd=PASSWD,
-            port=PORT,
-            database=DBNAME,
+            host=env("ENDPOINT"),
+            user=env("USER"),
+            passwd=env("PASSWD"),
+            port=env("PORT"),
+            database=env("DBNAME"),
         )
         cur = conn.cursor()
         cur.execute(script)
@@ -19,6 +22,3 @@ def mysql_consultor(script):
         print("Database connection failed due to {}".format(e))
         return []
         
-
-if __name__ == "__main__":
-    mysql_consultor(script_prueba)

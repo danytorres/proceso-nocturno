@@ -1,19 +1,23 @@
-import csv 
-import json
+import csv
+from pathlib import Path
 from procesos.models import *
 
-def csv_to_json():
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+def run():
     tablas = [Tabla_23_0, Tabla_0_1, Tabla_1_2, Tabla_2_3, Tabla_3_4, Tabla_4_5]
-    fields = ["id_job", "job", "carpeta", "proceso", "tipo", "com", "secuencia", "hora"]
+    # fields = ["id_job", "job", "carpeta", "proceso", "tipo", "com", "secuencia", "hora"]
     
     for i in range(6):
-        csvFilePath = f'./procesos/helpers/tabla_{i+1}.csv'
+        csvFilePath = BASE_DIR / f'datos/tabla_{i+1}.csv'
+        print(csvFilePath)
         #read csv file
         with open(csvFilePath, encoding='utf-8') as csvf: 
             reader = csv.reader(csvf)
             next(reader)
             
             for rowReader in reader:
+                print(rowReader)
                 row = tablas[i](
                     id_job=rowReader[0],
                     job=rowReader[1],
@@ -25,8 +29,3 @@ def csv_to_json():
                     hora=rowReader[7],
                     )
                 row.save()
-
-          
-            
-if __name__ == "__main__":
-    csv_to_json()
