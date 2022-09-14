@@ -1,0 +1,46 @@
+{% extends 'index.html' %}
+
+{% block proceso %}
+<div class="m-3">
+    {% for tabla in tablas %}
+        <table class="table table-striped table-bordered table-sm h6">
+            <caption>{{tabla.1}}</caption>
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">JOB</th>
+                    <th scope="col">CARPETA</th>
+                    <th scope="col">PROCESO</th>
+                    <th scope="col">TIPO</th>
+                    <th scope="col"></th>
+                    <th scope="col">SECUENCIA</th>
+                    <th scope="col">HORA</th>
+                    <th scope="col">STATUS DE BANDERA</th>
+                    <th scope="col">STATE</th>
+                    <th scope="col">STATUS DE EJECUCION</th>
+                    <th scope="col">STOREDAY COMPACT</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for col in tabla.0 %}
+                    <tr>
+                        <th>{{col.id_job}}</th>
+                        <td>{{col.job}}</td>
+                        <td>{{col.carpeta}}</td>
+                        <td>{{col.proceso}}</td>
+                        <td>{{col.tipo}}</td>
+                        <td>{{col.com}}</td>
+                        <td>{{col.secuencia}}</td>
+                        <td>{{col.hora}}</td>
+                        <td class="table-success">SUCCESS</td>
+                        <td class="table-success">COMPACTION</td>
+                        <td class="table-success">SUCCESS</td>
+                        <td>12/09/2022  01:52:49 a. m.</td>
+                    </tr>
+                {% endfor %}
+            </tbody> 
+        </table>
+    {% endfor %}
+    </div>
+{% endblock %}
+
