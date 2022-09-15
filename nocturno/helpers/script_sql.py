@@ -2,7 +2,7 @@
 def ScriptActualizado(fecha):
 
 	script_procesos = f"""
-	select p.process_id, p.module, p.process_desc, p.zone, p.status, p.storeday, t.table_id_fk, t.state, t.status, t.records_read, t.storeday 
+	select p.process_id, p.status, t.state, t.status, p.storeday
 	from eph_datalake_prod_datamodel.Process p
 	left join 
 	(
@@ -26,3 +26,12 @@ def ScriptActualizado(fecha):
 	"""
 
 	return script_procesos
+
+def ScriptOtrosProcesos(fecha):
+    script = f"""
+    select table_id_fk ,status,state , status ,storeday from eph_datalake_prod_datamodel.Table_Status 
+	where table_id_fk IN (95,3010130,3010129,3010128,3010127,3010126,3010125,3010124,3010123,3010122,3010121,3010120,3010119,3010118,3010117,3010116,3010115,81,85,86,87)  
+	and storeday like '{fecha}%' and state  = 'COMPACTION' and status = 'SUCCESS'
+    """
+    
+    return script

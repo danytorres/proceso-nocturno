@@ -9,11 +9,13 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">JOB</th>
+                    <!--
                     <th scope="col">CARPETA</th>
                     <th scope="col">PROCESO</th>
                     <th scope="col">TIPO</th>
                     <th scope="col"></th>
                     <th scope="col">SECUENCIA</th>
+                    -->
                     <th scope="col">HORA</th>
                     <th scope="col">STATUS DE BANDERA</th>
                     <th scope="col">STATE</th>
@@ -24,18 +26,44 @@
             <tbody>
                 {% for col in tabla.0 %}
                     <tr>
-                        <th>{{col.id_job}}</th>
-                        <td>{{col.job}}</td>
-                        <td>{{col.carpeta}}</td>
-                        <td>{{col.proceso}}</td>
-                        <td>{{col.tipo}}</td>
-                        <td>{{col.com}}</td>
-                        <td>{{col.secuencia}}</td>
-                        <td>{{col.hora}}</td>
-                        <td class="table-success">SUCCESS</td>
-                        <td class="table-success">COMPACTION</td>
-                        <td class="table-success">SUCCESS</td>
-                        <td>12/09/2022  01:52:49 a. m.</td>
+                        <th>{{col.0}}</th>
+                        <td>{{col.1}}</td>
+                        <!--
+                        <td>{{col.2}}</td>
+                        <td>{{col.3}}</td>
+                        <td>{{col.4}}</td>
+                        <td>{{col.5}}</td>
+                        <td>{{col.6}}</td>
+                        -->
+                        <td>{{col.7}}</td>
+                        {% if col.8.status_bandera == 'SUCCESS' %}
+                        <td class="table-success">
+                        {% elif col.8.status_bandera == 'EXTRACTION' %}
+                        <td class="table-warning">
+                        {% else %}
+                        <td class="table-danger">
+                        {% endif %}
+                            {{ col.8.status_bandera }}
+                        </td>
+                        {% if col.8.state == 'SUCCESS' or col.8.state == 'COMPACTION' %}
+                        <td class="table-success">
+                        {% elif col.8.state == 'EXTRACTION' %}
+                        <td class="table-warning">
+                        {% else %}
+                        <td class="table-danger">
+                        {% endif %}
+                            {{ col.8.state }}
+                        </td>
+                        {% if col.8.status_ejec == 'SUCCESS' %}
+                        <td class="table-success">
+                        {% elif col.8.status_ejec == 'EXTRACTION' %}
+                        <td class="table-warning">
+                        {% else %}
+                        <td class="table-danger">
+                        {% endif %}
+                            {{ col.8.status_ejec }}
+                        </td>
+                        <td>{{ col.8.store_day }}</td>
                     </tr>
                 {% endfor %}
             </tbody> 
