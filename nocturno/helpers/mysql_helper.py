@@ -1,10 +1,12 @@
 import mysql.connector
 from nocturno.settings import env
-from nocturno.helpers.script_sql import ScriptActualizado
+from nocturno.helpers.script_sql import ScriptActualizado, ScriptOtrosProcesos
 
-def mysql_consultor(fecha):
 
-    script = ScriptActualizado(fecha)
+def mysql_consultor(fecha_1, fecha_2):
+
+    script_1 = ScriptActualizado(fecha_1)
+    script_2 = ScriptOtrosProcesos(fecha_2)
     try:
         conn = mysql.connector.connect(
             host=env("ENDPOINT"),
@@ -14,11 +16,23 @@ def mysql_consultor(fecha):
             database=env("DBNAME"),
         )
         cur = conn.cursor()
-        cur.execute(script)
-        query_results = cur.fetchall()
-        print(query_results)
-        return query_results
+        cur.execute("SET time_zone = 'America/Mexico_City';")
+        cur.execute(script_1)
+        query_results_1 = cur.fetchall()
+        dict_script_1 = CombertirADiccionario(query_results_1)
+        cur.execute(script_2)
+        query_results_2 = cur.fetchall()
+        dict_script_2 = CombertirADiccionario(query_results_2)
+        cur.close()
+        return dict_script_1, dict_script_2
     except Exception as e:
         print("Database connection failed due to {}".format(e))
-        return []
+        return [], []
+    
+def CombertirADiccionario(query_results):
+    dict_result = {}
+    for row in query_results:
+        datos_proceso = {'status_bandera':row[1], 'state': row[2], 'status_ejec':row[3], 'store_day':row[4]}
+        dict_result[row[0]] = datos_proceso
+    return dict_result
         
