@@ -2,7 +2,6 @@ from django.shortcuts import render
 from procesos.models import *
 from nocturno.helpers.mysql_helper import mysql_consultor
 from datetime import date
-from nocturno.helpers.script_sql import ScriptActualizado, ScriptOtrosProcesos
 
 # Create your views here.
 def ActualizacionProcesos(request):
@@ -17,8 +16,8 @@ def ActualizacionProcesos(request):
 
     #today = date.today()
     #fecha = today.strftime("%Y-%m-%d")
-    fecha_1 = "2022-09-14"
-    fecha_2 = "2022-09-15"
+    fecha_1 = "2022-09-15"
+    fecha_2 = "2022-09-16"
     datos_actualizados, datos_otros_procesos = mysql_consultor(fecha_1, fecha_2)
     res = []
     for tabla in tablas_array:
@@ -32,8 +31,13 @@ def ActualizacionProcesos(request):
                     row.com,
                     row.secuencia,
                     row.hora,
-                    datos_actualizados.get(int(row.id_job) if row.id_job != '#N/D' else '0', 
-                                           datos_otros_procesos.get(int(row.id_job) if row.id_job != '#N/D' else '0', 'sin datos'))
+                    datos_actualizados.get(
+                        int(row.id_job) if row.id_job != '#N/D' else '0', 
+                        datos_otros_procesos.get(
+                            int(row.id_job) if row.id_job != '#N/D' else '0', 
+                            'sin datos'
+                        )
+                    )
                 ]
             for row in tabla
             ]
