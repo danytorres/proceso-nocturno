@@ -70,3 +70,6 @@ class Tabla_5(models.Model):
     com = models.CharField(max_length=30)
     secuencia = models.CharField(max_length=30)
     hora = models.CharField(max_length=30)
+    
+class FechaActual(models.Model):
+    today = models.DateField()
