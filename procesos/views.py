@@ -1,9 +1,22 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from procesos.models import *
 from nocturno.helpers.mysql_helper import mysql_consultor
-from datetime import date, timedelta
+from datetime import timedelta, datetime, date, time
+from django.utils.timezone import make_aware
+#from django.conf import settings
 
 # Create your views here.
+def ActualizarFecha(request):
+    t = time(23, 15)
+    d = date.today()
+    today_out = datetime.combine(d,t)
+    today = make_aware(today_out)
+    today_objeto = FechaActual.objects.get(id=1)
+    today_objeto.today = today
+    today_objeto.save()
+    return redirect("home_page")
+
+
 def ActualizacionProcesos(request):
     tabla_1_q = Tabla_23_0.objects.all()
     tabla_2_q = Tabla_0_1.objects.all()
@@ -88,4 +101,4 @@ def ActualizacionProcesos(request):
         [res[5], "4-5"],
         [res[6], "5"],
     ]
-    return render(request, "procesos.html", {"tablas": tablas, "jobs": jobs_rojos})
+    return render(request, "procesos.html", {"tablas": tablas, "jobs": jobs_rojos, "fecha":today})

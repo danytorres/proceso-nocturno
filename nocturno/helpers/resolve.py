@@ -1,18 +1,7 @@
 from procesos.models import *
 from nocturno.helpers.mysql_helper import mysql_consultor
-from datetime import date, timedelta
+from datetime import timedelta
 
-
-def actualiza_fecha(today):
-    today_str = today.strftime("%Y-%m-%d")
-    print(f"Actualizar_fecha: {today_str}")
-    FechaActual.objects.all().delete()
-    objeto_today = FechaActual(today=today)
-    objeto_today.save()
-    today_res = FechaActual.objects.all()[0].today
-    today_str = today_res.strftime("%Y-%m-%d")
-    print(f"Fecha en base de datos: {today_str}")
-    return {"fecha":today_res}
 
 def query_objetos():
     

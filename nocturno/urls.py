@@ -16,12 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 # from calendario.views import PrimeraPaguina
-from procesos.views import ActualizacionProcesos
+from procesos.views import ActualizacionProcesos, ActualizarFecha
 from django.views.decorators.csrf import csrf_exempt
 from graphene_django.views import GraphQLView
 
 urlpatterns = [
-    path("", ActualizacionProcesos),
+    path("", ActualizacionProcesos, name="home_page"),
+    path("actualizarFecha/", ActualizarFecha, name="actualizar_fecha"),
     path("graphql/", csrf_exempt(GraphQLView.as_view(graphiql=True))),
     path("admin/", admin.site.urls),
 ]

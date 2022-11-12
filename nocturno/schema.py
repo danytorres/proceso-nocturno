@@ -1,6 +1,7 @@
 import graphene
+from graphene_django import DjangoObjectType
 from procesos.models import FechaActual
-from nocturno.helpers.resolve import query_objetos, actualiza_fecha
+from nocturno.helpers.resolve import query_objetos
 
 
 class TablaType(graphene.ObjectType):
@@ -28,20 +29,25 @@ class StatusType(graphene.ObjectType):
     Tabla_5 = graphene.List(TablaType)
 
 
+class TodayType(DjangoObjectType):
+    class Meta:
+        model = FechaActual
+
+
 class ActualizarFecha(graphene.Mutation):
     class Arguments:
-        fecha = graphene.DateTime()
+        today = graphene.DateTime(required=True)
     
-    ok = graphene.Boolean()
-    today = graphene.Field(lambda: Today)
+    today = graphene.Field(TodayType)
     
-    def mutate(root, info, fecha):
-        ok = True
-        today = Today(fecha=fecha)
-        return actualiza_fecha(fecha)
+    
+    @classmethod
+    def mutate(cls, root, info, today):
+        today_objeto = FechaActual.objects.get(id=1)
+        today_objeto.today = today
+        today_objeto.save()
+        return ActualizarFecha(today=today_objeto)
 
-class Today(graphene.ObjectType):
-    fecha = graphene.DateTime()
 
 
 class MyMutations(graphene.ObjectType):
@@ -50,10 +56,7 @@ class MyMutations(graphene.ObjectType):
 
 class Query(graphene.ObjectType):
     status = graphene.Field(StatusType)
-    today = graphene.Field(Today)
     
-    def resolve_today(root, info):
-        return FechaActual.objects.all()[0].today
     
     def resolve_status(root, info):
         return query_objetos()

@@ -1,11 +1,17 @@
 import csv
 from pathlib import Path
 from procesos.models import *
+from datetime import date
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 def run():
+    
+    today =  date.today()
+    today_save = FechaActual(today=today)
+    today_save.save()
+    
     tablas = [
         Tabla_23_0,
         Tabla_0_1,
@@ -15,7 +21,6 @@ def run():
         Tabla_4_5,
         Tabla_5,
     ]
-    # fields = ["id_job", "job", "carpeta", "proceso", "tipo", "com", "secuencia", "hora"]
 
     for i in range(7):
         csvFilePath = BASE_DIR / f"datos/tabla_{i+1}.csv"
