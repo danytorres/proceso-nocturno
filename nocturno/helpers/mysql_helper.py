@@ -1,12 +1,15 @@
 import mysql.connector
 from nocturno.settings import env
-from nocturno.helpers.script_sql import ScriptActualizado, ScriptOtrosProcesos
+from nocturno.helpers.script_sql import ScriptActualizado, ScriptOtrosProcesos #, ScriptActualizadoFechas
 
 
 def mysql_consultor(fecha_1, fecha_2):
 
     script_1 = ScriptActualizado(fecha_1)
     script_2 = ScriptOtrosProcesos(fecha_2)
+    #script_3, script_4 = ScriptActualizadoFechas(fecha_1)
+    #print(script_3)
+    #print(script_4)
     try:
         conn = mysql.connector.connect(
             host=env("ENDPOINT"),

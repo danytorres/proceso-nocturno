@@ -1,13 +1,12 @@
 
 def ScriptActualizado(fecha):
-
 	script_procesos = f"""
 	select p.process_id, p.status, t.state, t.status, p.storeday
 	from eph_datalake_prod_datamodel.Process p
 	left join 
 	(
 		select 
-		t.table_id_fk, t.state, t.status, max(t.records_read) as records_read, max(t.storeday) as storeday 
+		t.table_id_fk, t.state, t.status, max(t.storeday) as storeday 
 		from
 		eph_datalake_prod_datamodel.Table_Status t 
 		join (

@@ -7,7 +7,7 @@ from django.utils.timezone import make_aware
 
 # Create your views here.
 def ActualizarFecha(request):
-    t = time(23, 15)
+    t = time(13, 15)
     d = date.today()
     today_out = datetime.combine(d,t)
     today = make_aware(today_out)
@@ -42,9 +42,12 @@ def ActualizacionProcesos(request):
     man = today + timedelta(days=1)
     fecha_1 = today.strftime("%Y-%m-%d")
     fecha_2 = man.strftime("%Y-%m-%d")
+    #print(fecha_1)
+    #print(fecha_2)
     #fecha_1 = "2022-09-17"
     #fecha_2 = "2022-09-18"
     datos_actualizados, datos_otros_procesos = mysql_consultor(fecha_1, fecha_2)
+    #neva_tabla_1, nueva_tabla_2 = ScriptActualizadoFechas(fecha_1)
     res = []
     for tabla in tablas_array:
         tabla_res = [
