@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import environ
 import os
+from botocore.config import Config
 
 env = environ.Env(
     # set casting, default value
@@ -141,3 +142,17 @@ GRAPHENE = {
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
 ]
+
+S3_LOCATION = "s3://eph-datalake-dev-utilities/logs"
+
+my_config = Config(
+        region_name="us-east-1",
+    )
+
+CONFIG_DATA_AWS = {
+        "access": env("ACCESS_KEY_AWS"),
+        "secret": env("SECRET_KEY_AWS"),
+        "location": S3_LOCATION,
+        "config": my_config,
+        "query": "",
+    }

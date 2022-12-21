@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from procesos.models import *
 from nocturno.helpers.mysql_helper import mysql_consultor
+from nocturno.helpers.athenea_helper import get_data
 from datetime import timedelta, datetime, date, time
 from django.utils.timezone import make_aware
-#from django.conf import settings
+from django.conf import settings
+from nocturno.helpers.script_sql_job import scripts_jobs
 
 # Create your views here.
 def ActualizarFecha(request):
@@ -15,6 +17,34 @@ def ActualizarFecha(request):
     today_objeto.today = today
     today_objeto.save()
     return redirect("home_page")
+
+
+def JobCount(request, segment):
+    today = FechaActual.objects.all()[0].today
+    tablas_base_datos = [
+        [Tabla_t001l_erp, Tabla_mara], [Tabla_mean, Tabla_lfa1],
+        [Tabla_t161t, Tabla_vbrk, Tabla_vbrp, Tabla_val_vb],
+        [Tabla_ekko, Tabla_ekbe, Tabla_fret, Tabla_ekpo], [Tabla_mseg],
+        [Tabla_tlog_x, Tabla_tstat, Tabla_tlogf]
+        ]
+    if segment == 0:
+        scripts = [x for l in scripts_jobs for x in l]
+        rows_seg = 11
+        base_datos = [x for l in tablas_base_datos for x in l] 
+    else:
+        bloque = segment - 1
+        scripts = scripts_jobs[bloque]
+        rows_seg = 10
+        base_datos = tablas_base_datos[bloque]
+    config = settings.CONFIG_DATA_AWS
+    #tablas_res = []
+    for index in range(len(scripts)):
+        config["query"] = scripts[index] + f" limit {rows_seg};"
+        res_script = get_data(config)
+        #tablas_res.append(res_script)
+        
+
+    return render(request, "jobs_counts.html")# , {"tablas_res":tablas_res})
 
 
 def ActualizacionProcesos(request):
