@@ -82,13 +82,13 @@ class Tabla_t001l_erp(models.Model):
     
 class Tabla_mara(models.Model):
     day_process = models.DateTimeField()
-    storeday_colum = models.DateTimeField()
+    storeday_colum = models.IntegerField()
     count = models.IntegerField()
     second_store = models.FloatField()
     
 class Tabla_tlog_x(models.Model):
     day_process = models.DateTimeField()
-    storeday_colum = models.DateTimeField()
+    storeday_colum = models.IntegerField()
     count = models.IntegerField()
     second_store = models.FloatField()
     
@@ -112,7 +112,7 @@ class Tabla_lfa1(models.Model):
     
 class Tabla_tlogf(models.Model):
     day_process = models.DateTimeField()
-    storeday_colum = models.DateTimeField()
+    storeday_colum = models.IntegerField()
     count = models.IntegerField()
     second_store = models.FloatField()
     
@@ -124,13 +124,13 @@ class Tabla_t161t(models.Model):
     
 class Tabla_ekko(models.Model):
     day_process = models.DateTimeField()
-    storeday_colum = models.DateTimeField()
+    storeday_colum = models.IntegerField()
     count = models.IntegerField()
     second_store = models.FloatField()
     
 class Tabla_ekbe(models.Model):
     day_process = models.DateTimeField()
-    storeday_colum = models.DateTimeField()
+    storeday_colum = models.IntegerField()
     count = models.IntegerField()
     second_store = models.FloatField()
     
@@ -142,13 +142,13 @@ class Tabla_knop(models.Model):
     
 class Tabla_fret(models.Model):
     day_process = models.DateTimeField()
-    storeday_colum = models.DateTimeField()
+    storeday_colum = models.IntegerField()
     count = models.IntegerField()
     second_store = models.FloatField()
     
 class Tabla_ekpo(models.Model):
     day_process = models.DateTimeField()
-    storeday_colum = models.DateTimeField()
+    storeday_colum = models.IntegerField()
     count = models.IntegerField()
     second_store = models.FloatField()
     
@@ -160,19 +160,19 @@ class Tabla_vbrk(models.Model):
     
 class Tabla_vbrp(models.Model):
     day_process = models.DateTimeField()
-    storeday_colum = models.DateTimeField()
+    storeday_colum = models.IntegerField()
     count = models.IntegerField()
     second_store = models.FloatField()
     
 class Tabla_val_vb(models.Model):
     day_process = models.DateTimeField()
-    storeday_colum = models.DateTimeField()
-    count = models.IntegerField()
+    storeday_colum = models.IntegerField()
+    count = models.FloatField()
     second_store = models.FloatField()
     
 class Tabla_mseg(models.Model):
     day_process = models.DateTimeField()
-    storeday_colum = models.DateTimeField()
+    storeday_colum = models.TextField()
     count = models.IntegerField()
     second_store = models.FloatField()
     

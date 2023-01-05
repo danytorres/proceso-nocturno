@@ -9,13 +9,23 @@
             <tr>
                 <th>fecha</th>
                 <th>count</th>
+                <th>fecha</th>
+                <th>count</th>
+                <th>diferencia</th>
+                <th>porcentaje</th>
             </tr>
         </thead>
         <tbody>
             {% for row in tabla %}
             <tr>
-                <th>{{ row.0 }}</th>
-                <th>{{ row.1 }}</th>
+                {% for celda in row %}
+                <td>{{ celda }}</td>
+                {% endfor %}
+                <!-- <td>{{ row.count }}</td>
+                <td>{{ row.storeday_colum }}</td>
+                <td>{{ row.count }}</td>
+                <td>{{ row.storeday_colum }}</td>
+                <td>{{ row.count }}</td> -->
             </tr>
             {% endfor %}
         </tbody>

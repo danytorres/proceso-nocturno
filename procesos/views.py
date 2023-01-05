@@ -6,6 +6,7 @@ from datetime import timedelta, datetime, date, time
 from django.utils.timezone import make_aware
 from django.conf import settings
 from nocturno.helpers.script_sql_job import scripts_jobs
+from django.core.exceptions import ValidationError, ObjectDoesNotExist
 
 # Create your views here.
 def ActualizarFecha(request):
@@ -21,30 +22,75 @@ def ActualizarFecha(request):
 
 def JobCount(request, segment):
     today = FechaActual.objects.all()[0].today
-    tablas_base_datos = [
-        [Tabla_t001l_erp, Tabla_mara], [Tabla_mean, Tabla_lfa1],
-        [Tabla_t161t, Tabla_vbrk, Tabla_vbrp, Tabla_val_vb],
-        [Tabla_ekko, Tabla_ekbe, Tabla_fret, Tabla_ekpo], [Tabla_mseg],
-        [Tabla_tlog_x, Tabla_tstat, Tabla_tlogf]
-        ]
+    tablas_base_datos = (
+        (Tabla_t001l_erp, Tabla_mara), (Tabla_mean, Tabla_lfa1),
+        (Tabla_t161t, Tabla_vbrk, Tabla_vbrp, Tabla_val_vb),
+        (Tabla_ekko, Tabla_ekbe, Tabla_knop, Tabla_fret, Tabla_ekpo), [Tabla_mseg],
+        (Tabla_tlog_x, Tabla_tstat, Tabla_tlogf)
+    )
+    
     if segment == 0:
         scripts = [x for l in scripts_jobs for x in l]
-        rows_seg = 11
-        base_datos = [x for l in tablas_base_datos for x in l] 
+        rows_seg = 10
+        base_datos = [x for l in tablas_base_datos for x in l]
+        store = False
     else:
         bloque = segment - 1
         scripts = scripts_jobs[bloque]
-        rows_seg = 10
+        rows_seg = 11
         base_datos = tablas_base_datos[bloque]
-    config = settings.CONFIG_DATA_AWS
-    #tablas_res = []
-    for index in range(len(scripts)):
-        config["query"] = scripts[index] + f" limit {rows_seg};"
-        res_script = get_data(config)
-        #tablas_res.append(res_script)
+        store = True
         
+    config = settings.CONFIG_DATA_AWS
+    tablas_res = []
+    
+    # for index in range(len(scripts)):
+    #     config["query"] = scripts[index] + f" limit {rows_seg};"
+    #     res_script = get_data(config)
+    #     #tablas_res.append(res_script)
+    #     for row in res_script:
+    #         try:
+    #             obj_to_save = base_datos[index](day_process=today, storeday_colum=row[0], count=row[1], second_store=store)
+    #             obj_to_save.save()
+    #             print(f"guardando row en {base_datos[index]}")
+    #         except:
+    #             print("error guardando objeto")
+            
+    
+    for index in range(len(base_datos)):
+        # all_obj_before = base_datos[index].objects.filter(day_process=today, second_store=False)
+        all_obj_after  = base_datos[index].objects.filter(day_process=today, second_store=True)
+        tabla_gen = []
+        for data in all_obj_after:
+            try:
+                obj_before = base_datos[index].objects.get(day_process=today, second_store=False, storeday_colum=data.storeday_colum)
+                before_count = obj_before.count
+                before_storeday = obj_before.storeday_colum
+            except ObjectDoesNotExist:
+                before_count = 0
+                before_storeday = data.storeday_colum
+                
+            try:
+                diferencia = data.count - before_count
+                porcentaje = (diferencia/data.count)*100
+            except ZeroDivisionError:
+                porcentaje = 0
+            row = [
+                before_storeday,
+                before_count,
+                data.storeday_colum,
+                data.count,
+                diferencia,
+                porcentaje
+            ]
+            
+            tabla_gen.append(row)
+                
+            
+        
+        tablas_res.append(tabla_gen)
 
-    return render(request, "jobs_counts.html")# , {"tablas_res":tablas_res})
+    return render(request, "jobs_counts.html", {"tablas_res":tablas_res})
 
 
 def ActualizacionProcesos(request):
