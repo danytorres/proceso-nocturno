@@ -72,7 +72,8 @@ def JobCount(request, segment):
                 
             try:
                 diferencia = data.count - before_count
-                porcentaje = (diferencia/data.count)*100
+                # porcentaje = (diferencia/data.count)*100
+                porcentaje = "{0:.2%}".format(diferencia/data.count)
             except ZeroDivisionError:
                 porcentaje = 0
             row = [
@@ -85,9 +86,7 @@ def JobCount(request, segment):
             ]
             
             tabla_gen.append(row)
-                
             
-        
         tablas_res.append(tabla_gen)
 
     return render(request, "jobs_counts.html", {"tablas_res":tablas_res})
