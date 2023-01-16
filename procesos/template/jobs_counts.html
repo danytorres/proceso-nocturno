@@ -5,18 +5,27 @@
 <div class="m-2">
     {% for tabla in tablas_res %}
     <table class="table table-striped table-bordered table-sm">
-        <thead class="thead-dark">
+        <caption>{{tabla.0}}</caption>
+        <thead>
             <tr>
-                <th>fecha</th>
-                <th>count</th>
-                <th>fecha</th>
-                <th>count</th>
-                <th>diferencia</th>
-                <th>porcentaje</th>
+                <th colspan="6" style="text-align:center" class="table-active">{{tabla.0}}</th>
+            </tr>
+            <tr style="text-align:center">
+                <th colspan="2" class="table-warning">Antes</th>
+                <th colspan="2" class="table-warning">Despues</th>
+                <th rowspan = "2" class="table-info">diferencia</th>
+                <th rowspan = "2" class="table-info">porcentaje</th>
+            </tr>
+            <tr>
+                <th class="table-success">fecha</th>
+                <th class="table-success">count</th>
+                <th class="table-success">fecha</th>
+                <th class="table-success">count</th>
+
             </tr>
         </thead>
         <tbody>
-            {% for row in tabla %}
+            {% for row in tabla.1 %}
             <tr>
                 {% for celda in row %}
                 <td>{{ celda }}</td>

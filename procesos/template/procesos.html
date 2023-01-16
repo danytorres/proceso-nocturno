@@ -3,11 +3,11 @@
 {% block proceso %}
 <!-- <button type="button" class="btn btn-primary m-4" href="Cambio de Fecha">Cambio de Fecha</button> 
 <a class="btn btn-primary m-4" href="actualizarFecha/" role="button">Cambio de Fecha</a>-->
-<p>Fecha actual: {{fecha}}</p>
+<p class="h3">Fecha actual: {{fecha}}</p>
 <div class="m-2">
-    {% for tabla in tablas %}
+    {% for key, tabla in tablas.items %}
         <table class="table table-striped table-bordered table-sm">
-            <caption>{{tabla.1}}</caption>
+            <caption>{{key}}</caption>
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">ID</th>
@@ -27,52 +27,52 @@
                 </tr>
             </thead>
             <tbody>
-                {% for col in tabla.0 %}
+                {% for col in tabla %}
                     <tr>
-                        <th>{{col.0}}</th>
-                        {% if col.1 in jobs %}
+                        <th>{{col.id_job}}</th>
+                        {% if col.job in jobs %}
                         <td class="text-danger">
                         {% else %}
                         <td>
                         {% endif %}
-                            {{col.1}}
+                            {{col.job}}
                         </td>
-                        <td>{{col.2}}</td>
+                        <td>{{col.carpeta}}</td>
                         <!--
                         <td>{{col.3}}</td>
                         <td>{{col.4}}</td>
                         <td>{{col.5}}</td>
                         <td>{{col.6}}</td>
                         -->
-                        <td>{{col.7}}</td>
-                        {% if col.8.status_bandera == 'SUCCESS' %}
+                        <td>{{col.hora}}</td>
+                        {% if col.status_bandera == 'SUCCESS' %}
                         <td class="table-success">
-                        {% elif col.8.status_bandera == 'EXTRACTION' %}
+                        {% elif col.status_bandera == 'EXTRACTION' %}
                         <td class="table-warning">
                         {% else %}
                         <td class="table-danger">
                         {% endif %}
-                            {{ col.8.status_bandera }}
+                            {{ col.status_bandera }}
                         </td>
-                        {% if col.8.state == 'SUCCESS' or col.8.state == 'COMPACTION' %}
+                        {% if col.state == 'SUCCESS' or col.state == 'COMPACTION' %}
                         <td class="table-success">
-                        {% elif col.8.state == 'EXTRACTION' %}
+                        {% elif col.state == 'EXTRACTION' %}
                         <td class="table-warning">
                         {% else %}
                         <td class="table-danger">
                         {% endif %}
-                            {{ col.8.state }}
+                            {{ col.state }}
                         </td>
-                        {% if col.8.status_ejec == 'SUCCESS' %}
+                        {% if col.status_ejec == 'SUCCESS' %}
                         <td class="table-success">
-                        {% elif col.8.status_ejec == 'EXTRACTION' %}
+                        {% elif col.status_ejec == 'EXTRACTION' %}
                         <td class="table-warning">
                         {% else %}
                         <td class="table-danger">
                         {% endif %}
-                            {{ col.8.status_ejec }}
+                            {{ col.status_ejec }}
                         </td>
-                        <td>{{ col.8.store_day }}</td>
+                        <td>{{ col.store_day }}</td>
                     </tr>
                 {% endfor %}
             </tbody> 

@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'corsheaders',
-    "calendario",
     "procesos",
     'django_extensions',
     "graphene_django",
@@ -70,7 +69,6 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
-            BASE_DIR / 'calendario/template', 
             BASE_DIR / "procesos/template", 
             BASE_DIR / "nocturno/template"
         ],
@@ -122,7 +120,7 @@ TIME_ZONE = "America/Mexico_City"
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)

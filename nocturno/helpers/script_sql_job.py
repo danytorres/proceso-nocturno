@@ -185,10 +185,21 @@ group by 1
 order by 1 desc ) where vta_net_rtl is not null
 """
 
+jobs = [
+    ["t001l_erp", "mara_erp"],
+    ["mean_erp", "lfa1_erp"],
+    ["t161t_erp", "vbrk_erp", "vbrp_erp", "val_vbr"],
+    ["ekko_erp", "ekbe_erp", "konp_erp", "fret_erp", "ekpo_erp"],
+    ["mseg_erp"],
+    ["posdw_tlogf_x_cap", "posdw_tstat_cap", "POSDW_TLOGF_CAP"]
+]
+
 scripts_jobs = [
     [t001l_erp, mara_erp],
-    [mean_erp, lfa1_erp], [t161t_erp, vbrk_erp, vbrp_erp, val_vbr],
-    [ekko_erp, ekbe_erp, konp_erp, fret_erp, ekpo_erp], [mseg_erp],
+    [mean_erp, lfa1_erp],
+    [t161t_erp, vbrk_erp, vbrp_erp, val_vbr],
+    [ekko_erp, ekbe_erp, konp_erp, fret_erp, ekpo_erp],
+    [mseg_erp],
     [posdw_tlogf_x_cap, posdw_tstat_cap, POSDW_TLOGF_CAP]
 ]
 
