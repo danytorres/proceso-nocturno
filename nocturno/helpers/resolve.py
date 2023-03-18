@@ -1,65 +1,82 @@
 from procesos.models import *
 from nocturno.helpers.mysql_helper import mysql_consultor
 from datetime import timedelta
+# from concurrent.futures import Executor
 from django.conf import settings
 from nocturno.helpers.script_sql_job import scripts_jobs, jobs
 from nocturno.helpers.athenea_helper import get_data
 from django.core.exceptions import ObjectDoesNotExist
 
 
-def query_objetos():
-    
+def query_objetos(jobs_to_save_flag):
+
     tablas_dict = {
-        'Tabla_23_0':Tabla_23_0.objects.all(),
-        'Tabla_0_1':Tabla_0_1.objects.all(),
-        'Tabla_1_2':Tabla_1_2.objects.all(),
-        'Tabla_2_3':Tabla_2_3.objects.all(),
-        'Tabla_3_4':Tabla_3_4.objects.all(),
-        'Tabla_4_5':Tabla_4_5.objects.all(),
-        'Tabla_5':Tabla_5.objects.all()
-        }
+        'Tabla_23_0': Tabla_23_0.objects.all(),
+        'Tabla_0_1': Tabla_0_1.objects.all(),
+        'Tabla_1_2': Tabla_1_2.objects.all(),
+        'Tabla_2_3': Tabla_2_3.objects.all(),
+        'Tabla_3_4': Tabla_3_4.objects.all(),
+        'Tabla_4_5': Tabla_4_5.objects.all(),
+        'Tabla_5': Tabla_5.objects.all()
+    }
 
     today = FechaActual.objects.all()[0].today
     man = today + timedelta(days=1)
     fecha_1 = today.strftime("%Y-%m-%d")
     fecha_2 = man.strftime("%Y-%m-%d")
-    
-    datos_actualizados, datos_otros_procesos = mysql_consultor(fecha_1, fecha_2)
+
+    datos_actualizados, datos_otros_procesos = mysql_consultor(
+        fecha_1, fecha_2)
     sin_datos = {
-        'status_bandera':'Sin datos',
+        'status_bandera': 'Sin datos',
         'state': 'Sin datos',
-        'status_ejec':'Sin datos',
-        'store_day':today
-        }
+        'status_ejec': 'Sin datos',
+        'store_day': today
+    }
     res = {}
     for key, tabla in tablas_dict.items():
         list_tabla = []
+
         for row in tabla:
             status_row = datos_actualizados.get(
-                            int(row.id_job) if row.id_job != "#N/D" else "0",
-                            datos_otros_procesos.get(
-                                int(row.id_job) if row.id_job != "#N/D" else "0", 
-                                sin_datos
-                            )
-                        )
+                int(row.id_job) if row.id_job != "#N/D" else "0",
+                datos_otros_procesos.get(
+                    int(row.id_job) if row.id_job != "#N/D" else "0",
+                    sin_datos
+                )
+            )
+
+            # if row.job in jobs_to_save_flag and status_row['status_bandera'] == 'SUCCESS':
+            #     try:
+            #         job_save_flag_db = BanderaSaveJobs.objects.get(job=row.job)
+            #     except ObjectDoesNotExist:
+            #         job_save_flag_db = BanderaSaveJobs(
+            #                                         job=row.job,
+            #                                         day_process=today,
+            #                                         status_bandera=status_row['status_bandera']
+            #                                         )
+            #         job_save_flag_db.save()
+            #         print(f"Se guardo estatus flag job de {row.job}")
+
             dict_row = {
-                    'id_job':row.id_job,
-                    'job':row.job,
-                    'carpeta':row.carpeta,
-                    'proceso':row.proceso,
-                    'tipo':row.tipo,
-                    'com':row.com,
-                    'secuencia':row.secuencia,
-                    'hora':row.hora,
-                    'status_bandera':status_row['status_bandera'], 
-                    'state': status_row['state'], 
-                    'status_ejec':status_row['status_ejec'], 
-                    'store_day':status_row['store_day']
-                    }
+                'id_job': row.id_job,
+                'job': row.job,
+                'carpeta': row.carpeta,
+                'proceso': row.proceso,
+                'tipo': row.tipo,
+                'com': row.com,
+                'secuencia': row.secuencia,
+                'hora': row.hora,
+                'status_bandera': status_row['status_bandera'],
+                'state': status_row['state'],
+                'status_ejec': status_row['status_ejec'],
+                'store_day': status_row['store_day']
+            }
             list_tabla.append(dict_row)
         res[key] = list_tabla
 
     return res
+
 
 def Parametros(segment):
     today = FechaActual.objects.all()[0].today
@@ -85,16 +102,18 @@ def Parametros(segment):
         base_datos = tablas_base_datos[bloque]
         nombre_bloque = jobs[bloque]
         store = True
-    
+
     return today, scripts, rows_seg, base_datos, nombre_bloque, store
 
+
 def SaveCountPerHour(segment):
-    today, scripts, rows_seg, base_datos, nombre_bloque, store = Parametros(segment)
+    today, scripts, rows_seg, base_datos, nombre_bloque, store = Parametros(
+        segment)
 
     config = settings.CONFIG_DATA_AWS
 
-    for index in range(len(scripts)):
-        config["query"] = scripts[index] + f" limit {rows_seg};"
+    for index, script in enumerate(scripts):
+        config["query"] = script + f" limit {rows_seg};"
         res_script = get_data(config)
 
         for row in res_script:
@@ -110,8 +129,10 @@ def SaveCountPerHour(segment):
             except:
                 print("error guardando objeto")
 
+
 def ShowCountPerHour(segment):
-    today, scripts, rows_seg, base_datos, nombre_bloque, store = Parametros(segment)
+    today, scripts, rows_seg, base_datos, nombre_bloque, store = Parametros(
+        segment)
     tablas_res = []
     for index in range(len(base_datos)):
         all_obj_after = base_datos[index].objects.filter(
@@ -143,7 +164,7 @@ def ShowCountPerHour(segment):
                 porcentaje = "{0:.2%}".format(diferencia / data.count)
             except ZeroDivisionError:
                 porcentaje = 0
-                
+
             row = [
                 before_storeday,
                 before_count,
@@ -156,5 +177,5 @@ def ShowCountPerHour(segment):
             tabla_gen.append(row)
 
         tablas_res.append([nombre_tabla, tabla_gen])
-    
+
     return tablas_res

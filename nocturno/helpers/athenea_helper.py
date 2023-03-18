@@ -1,8 +1,15 @@
+"""
+Modulo que ayuda a conectarce con athena
+"""
+
 import time
 import boto3
 
 
 def get_var_char_values(d):
+    """
+    Funcion que devuelve el valor en char
+    """
     return [obj["VarCharValue"] for obj in d["Data"]]
 
 
@@ -15,7 +22,7 @@ def get_data(config):
     Returns:
         List: Lista de datos obtenidos por el query mandado
     """
-    
+
     print("Obteniendo datos de athena")
     client = boto3.client(
         "athena",
@@ -59,18 +66,18 @@ def get_data(config):
             ]["OutputLocation"]
             print(f"Location: {location}")
 
-            ## Function to get output results
+            # Function to get output results
             response_query_result = client.get_query_results(
                 QueryExecutionId=response_query_execution_id["QueryExecutionId"]
             )
             result_data = response_query_result["ResultSet"]
 
             if len(result_data["Rows"]) > 1:
-                #header = result_data["Rows"][0]
+                # header = result_data["Rows"][0]
                 rows = result_data["Rows"][1:]
 
-                #header = [obj["VarCharValue"] for obj in header["Data"]]
-                #result = [dict(zip(header, get_var_char_values(row))) for row in rows]
+                # header = [obj["VarCharValue"] for obj in header["Data"]]
+                # result = [dict(zip(header, get_var_char_values(row))) for row in rows]
                 result = [get_var_char_values(row) for row in rows]
                 return result
             else:

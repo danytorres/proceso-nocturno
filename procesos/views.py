@@ -1,19 +1,17 @@
+"""
+Views Django
+"""
+
 from django.shortcuts import render, redirect
-from procesos.models import *
-from nocturno.helpers.athenea_helper import get_data
+from procesos.models import FechaActual
 from nocturno.helpers.resolve import query_objetos, SaveCountPerHour, ShowCountPerHour
 from datetime import datetime, date, time
-from django.utils.timezone import make_aware
-from django.conf import settings
-from nocturno.helpers.script_sql_job import scripts_jobs, jobs
-from django.core.exceptions import ValidationError, ObjectDoesNotExist
 
-# Create your views here.
+
 def ActualizarFecha(request):
-    t = time(13, 15)
+    t = time(23, 15)
     d = date.today()
-    today_out = datetime.combine(d, t)
-    today = make_aware(today_out)
+    today = datetime.combine(d, t)
     today_objeto = FechaActual.objects.get(id=1)
     today_objeto.today = today
     today_objeto.save()
@@ -57,9 +55,10 @@ def ActualizacionProcesos(request):
         "trafico_ecomm",
         "mseg",
     ]
-    
-    tablas = query_objetos()
-    
+
+    tablas = query_objetos(jobs_rojos)
+
     return render(
-        request, "procesos.html", {"tablas": tablas, "jobs": jobs_rojos, "fecha": today}
+        request, "procesos.html", {"tablas": tablas,
+                                   "jobs": jobs_rojos, "fecha": today}
     )
