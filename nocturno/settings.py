@@ -69,7 +69,7 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
-            BASE_DIR / "procesos/template", 
+            BASE_DIR / "procesos/template",
             BASE_DIR / "nocturno/template"
         ],
         "APP_DIRS": True,
@@ -105,9 +105,9 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator", },
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator", },
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator", },
 ]
 
 
@@ -144,13 +144,17 @@ CORS_ALLOWED_ORIGINS = [
 S3_LOCATION = "s3://eph-datalake-dev-utilities/logs"
 
 my_config = Config(
-        region_name="us-east-1",
-    )
+    region_name="us-east-1",
+)
 
 CONFIG_DATA_AWS = {
-        "access": env("ACCESS_KEY_AWS"),
-        "secret": env("SECRET_KEY_AWS"),
-        "location": S3_LOCATION,
-        "config": my_config,
-        "query": "",
-    }
+    "access": env("ACCESS_KEY_AWS"),
+    "secret": env("SECRET_KEY_AWS"),
+    "location": S3_LOCATION,
+    "config": my_config,
+    "query": "",
+}
+
+ssh_key_pem = os.path.join(BASE_DIR, 'palaciokey.pem')
+
+ssh_server = "ec2-18-213-16-147.compute-1.amazonaws.com"

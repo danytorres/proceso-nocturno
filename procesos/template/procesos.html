@@ -1,83 +1,81 @@
 {% extends 'index.html' %}
 
 {% block proceso %}
-<!-- <button type="button" class="btn btn-primary m-4" href="Cambio de Fecha">Cambio de Fecha</button> 
-<a class="btn btn-primary m-4" href="actualizarFecha/" role="button">Cambio de Fecha</a>-->
+<a class="btn btn-primary m-4" href="actualizarFecha/" role="button">Cambio de Fecha</a>
 <p class="h3">Fecha actual: {{fecha}}</p>
 <div class="m-2">
     {% for key, tabla in tablas.items %}
-        <table class="table table-striped table-bordered table-sm">
-            <caption>{{key}}</caption>
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">job</th>
-                    <th scope="col">carpeta</th>
-                    <!--
+    <table class="table table-striped table-bordered table-sm">
+        <caption>{{key}}</caption>
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">job</th>
+                <th scope="col">carpeta</th>
+                <!--
                     <th scope="col">PROCESO</th>
                     <th scope="col">TIPO</th>
                     <th scope="col"></th>
                     <th scope="col">SECUENCIA</th>
                     -->
-                    <th scope="col">hora</th>
-                    <th scope="col">status bandera</th>
-                    <th scope="col">state</th>
-                    <th scope="col">status ejecucion</th>
-                    <th scope="col">storeday</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for col in tabla %}
-                    <tr>
-                        <th>{{col.id_job}}</th>
-                        {% if col.job in jobs %}
-                        <td class="text-danger">
-                        {% else %}
-                        <td>
-                        {% endif %}
-                            {{col.job}}
-                        </td>
-                        <td>{{col.carpeta}}</td>
-                        <!--
+                <th scope="col">hora</th>
+                <th scope="col">status bandera</th>
+                <th scope="col">state</th>
+                <th scope="col">status ejecucion</th>
+                <th scope="col">storeday</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for col in tabla %}
+            <tr>
+                <th>{{col.id_job}}</th>
+                {% if col.job in jobs %}
+                <td class="text-danger">
+                    {% else %}
+                <td>
+                    {% endif %}
+                    {{col.job}}
+                </td>
+                <td>{{col.carpeta}}</td>
+                <!--
                         <td>{{col.3}}</td>
                         <td>{{col.4}}</td>
                         <td>{{col.5}}</td>
                         <td>{{col.6}}</td>
                         -->
-                        <td>{{col.hora}}</td>
-                        {% if col.status_bandera == 'SUCCESS' %}
-                        <td class="table-success">
-                        {% elif col.status_bandera == 'EXTRACTION' %}
-                        <td class="table-warning">
-                        {% else %}
-                        <td class="table-danger">
-                        {% endif %}
-                            {{ col.status_bandera }}
-                        </td>
-                        {% if col.state == 'SUCCESS' or col.state == 'COMPACTION' %}
-                        <td class="table-success">
-                        {% elif col.state == 'EXTRACTION' %}
-                        <td class="table-warning">
-                        {% else %}
-                        <td class="table-danger">
-                        {% endif %}
-                            {{ col.state }}
-                        </td>
-                        {% if col.status_ejec == 'SUCCESS' %}
-                        <td class="table-success">
-                        {% elif col.status_ejec == 'EXTRACTION' %}
-                        <td class="table-warning">
-                        {% else %}
-                        <td class="table-danger">
-                        {% endif %}
-                            {{ col.status_ejec }}
-                        </td>
-                        <td>{{ col.store_day }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody> 
-        </table>
+                <td>{{col.hora}}</td>
+                {% if col.status_bandera == 'SUCCESS' %}
+                <td class="table-success">
+                    {% elif col.status_bandera == 'EXTRACTION' %}
+                <td class="table-warning">
+                    {% else %}
+                <td class="table-danger">
+                    {% endif %}
+                    {{ col.status_bandera }}
+                </td>
+                {% if col.state == 'SUCCESS' or col.state == 'COMPACTION' %}
+                <td class="table-success">
+                    {% elif col.state == 'EXTRACTION' %}
+                <td class="table-warning">
+                    {% else %}
+                <td class="table-danger">
+                    {% endif %}
+                    {{ col.state }}
+                </td>
+                {% if col.status_ejec == 'SUCCESS' %}
+                <td class="table-success">
+                    {% elif col.status_ejec == 'EXTRACTION' %}
+                <td class="table-warning">
+                    {% else %}
+                <td class="table-danger">
+                    {% endif %}
+                    {{ col.status_ejec }}
+                </td>
+                <td>{{ col.store_day }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
     {% endfor %}
-    </div>
+</div>
 {% endblock %}
-

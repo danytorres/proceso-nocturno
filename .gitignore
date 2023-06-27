@@ -7,7 +7,7 @@ db.sqlite3
 media
 
 # Backup files # 
-*.bak 
+*.bak
 
 # If you are using PyCharm # 
 # User-specific stuff
@@ -46,8 +46,8 @@ out/
 atlassian-ide-plugin.xml
 
 # Python # 
-*.py[cod] 
-*$py.class 
+*.py[cod]
+*$py.class
 
 # Distribution / packaging 
 .Python build/ 
@@ -135,3 +135,6 @@ GitHub.sublime-settings
 !.vscode/launch.json 
 !.vscode/extensions.json 
 .history
+
+/*.pem
+*/.DS_Store

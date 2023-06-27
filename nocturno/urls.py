@@ -15,13 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from procesos.views import ActualizacionProcesos, JobCount #, ActualizarFecha
+from procesos.views import ActualizacionProcesos, JobCount, ActualizarFecha
 from django.views.decorators.csrf import csrf_exempt
 from graphene_django.views import GraphQLView
 
 urlpatterns = [
     path("", ActualizacionProcesos, name="home_page"),
-    #path("actualizarFecha/", ActualizarFecha, name="actualizar_fecha"),
+    path("actualizarFecha/", ActualizarFecha, name="actualizar_fecha"),
     path("jobs/<int:segment>/<str:work>/", JobCount, name="job_count"),
     path("graphql/", csrf_exempt(GraphQLView.as_view(graphiql=True))),
     path("admin/", admin.site.urls),
