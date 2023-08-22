@@ -2,22 +2,13 @@ version: '3.4'
 
 services:
   proceso-nocturno:
+    image: 100430482908.dkr.ecr.us-east-1.amazonaws.com/proceso-nocturno:latest
     container_name: proceso-nocturno
     build: .
-    environment:
-      - SECRET_KEY=${SECRET_KEY}
-      - DEBUG=${DEBUG}
-      - ENDPOINT=${ENDPOINT}
-      - PORT=${PORT}
-      - USER=${USER}
-      - PASSWD=${PASSWD}
-      - DBNAME=${DBNAME}
-      - ACCESS_KEY_AWS=${ACCESS_KEY_AWS}
-      - SECRET_KEY_AWS=${SECRET_KEY_AWS}
-      - ACCESS_KEY_ESTAFETA=${ACCESS_KEY_ESTAFETA}
-      - SECRET_KEY_ESTAFETA=${SECRET_KEY_ESTAFETA}
-      - SESSION_TOKEN_ESTAFETA=${SESSION_TOKEN_ESTAFETA}
-      - SFTP_PALACIO_KEY=${SFTP_PALACIO_KEY}
+    env_file:
+      - .env
+    volumes:
+      - ./nocturno:/app/
     ports:
       - 8000:8000
 
