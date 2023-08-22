@@ -3,14 +3,21 @@ Views Django
 """
 
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from procesos.models import FechaActual
 from nocturno.helpers.resolve import query_objetos, SaveCountPerHour, ShowCountPerHour
-from datetime import datetime, date, time
+from datetime import datetime, date, time, timedelta
 
 
 def ActualizarFecha(request):
+    date_now = datetime.now()
     t = time(23, 15)
+    time_reset = time(00, 00)
     d = date.today()
+    # today = datetime.combine(d, t)
+    today_reset = datetime.combine(d, time_reset)
+    if date_now > today_reset:
+        d = d - timedelta(days=1)
     today = datetime.combine(d, t)
     today_objeto = FechaActual.objects.get(id=1)
     today_objeto.today = today
@@ -24,10 +31,13 @@ def JobCount(request, segment, work):
         tablas_res = []
     elif work == "show":
         tablas_res = ShowCountPerHour(segment)
+    else:
+        tablas_res = []
 
     return render(request, "jobs_counts.html", {"tablas_res": tablas_res})
 
 
+@login_required
 def ActualizacionProcesos(request):
 
     today = FechaActual.objects.all()[0].today
