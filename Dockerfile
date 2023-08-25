@@ -43,7 +43,7 @@ USER analiticosbi
 #RUN python manage.py migrate
 #RUN python manage.py runscript tablas
 
-RUN rm -r datos
+#RUN rm -r datos
 
 # During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--timeout", "120","--workers", "5", "nocturno.wsgi"]
