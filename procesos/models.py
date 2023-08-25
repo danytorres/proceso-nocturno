@@ -18,98 +18,98 @@ class Tabla_23_0(models.Model):
     """
     Tabla para guardas jobs de la primera hora
     """
-    id_job = models.CharField(max_length=30)
-    job = models.CharField(max_length=30)
-    carpeta = models.CharField(max_length=30)
-    proceso = models.CharField(max_length=30)
-    tipo = models.CharField(max_length=30)
-    com = models.CharField(max_length=30)
-    secuencia = models.CharField(max_length=30)
-    hora = models.CharField(max_length=30)
+    id_job = models.CharField(max_length=70)
+    job = models.CharField(max_length=70)
+    carpeta = models.CharField(max_length=70)
+    proceso = models.CharField(max_length=70)
+    tipo = models.CharField(max_length=70)
+    com = models.CharField(max_length=70)
+    secuencia = models.CharField(max_length=70)
+    hora = models.CharField(max_length=70)
 
 
 class Tabla_0_1(models.Model):
     """
     Tabla para guardas jobs de la segunda hora
     """
-    id_job = models.CharField(max_length=30)
-    job = models.CharField(max_length=30)
-    carpeta = models.CharField(max_length=30)
-    proceso = models.CharField(max_length=30)
-    tipo = models.CharField(max_length=30)
-    com = models.CharField(max_length=30)
-    secuencia = models.CharField(max_length=30)
-    hora = models.CharField(max_length=30)
+    id_job = models.CharField(max_length=70)
+    job = models.CharField(max_length=70)
+    carpeta = models.CharField(max_length=70)
+    proceso = models.CharField(max_length=70)
+    tipo = models.CharField(max_length=70)
+    com = models.CharField(max_length=70)
+    secuencia = models.CharField(max_length=70)
+    hora = models.CharField(max_length=70)
 
 
 class Tabla_1_2(models.Model):
     """
     Tabla para guardas jobs de la tercera hora
     """
-    id_job = models.CharField(max_length=30)
-    job = models.CharField(max_length=30)
-    carpeta = models.CharField(max_length=30)
-    proceso = models.CharField(max_length=30)
-    tipo = models.CharField(max_length=30)
-    com = models.CharField(max_length=30)
-    secuencia = models.CharField(max_length=30)
-    hora = models.CharField(max_length=30)
+    id_job = models.CharField(max_length=70)
+    job = models.CharField(max_length=70)
+    carpeta = models.CharField(max_length=70)
+    proceso = models.CharField(max_length=70)
+    tipo = models.CharField(max_length=70)
+    com = models.CharField(max_length=70)
+    secuencia = models.CharField(max_length=70)
+    hora = models.CharField(max_length=70)
 
 
 class Tabla_2_3(models.Model):
     """
     Tabla para guardas jobs de la cuarta hora
     """
-    id_job = models.CharField(max_length=30)
-    job = models.CharField(max_length=30)
-    carpeta = models.CharField(max_length=30)
-    proceso = models.CharField(max_length=30)
-    tipo = models.CharField(max_length=30)
-    com = models.CharField(max_length=30)
-    secuencia = models.CharField(max_length=30)
-    hora = models.CharField(max_length=30)
+    id_job = models.CharField(max_length=70)
+    job = models.CharField(max_length=70)
+    carpeta = models.CharField(max_length=70)
+    proceso = models.CharField(max_length=70)
+    tipo = models.CharField(max_length=70)
+    com = models.CharField(max_length=70)
+    secuencia = models.CharField(max_length=70)
+    hora = models.CharField(max_length=70)
 
 
 class Tabla_3_4(models.Model):
     """
     Tabla para guardas jobs de la quinta hora
     """
-    id_job = models.CharField(max_length=30)
-    job = models.CharField(max_length=30)
-    carpeta = models.CharField(max_length=30)
-    proceso = models.CharField(max_length=30)
-    tipo = models.CharField(max_length=30)
-    com = models.CharField(max_length=30)
-    secuencia = models.CharField(max_length=30)
-    hora = models.CharField(max_length=30)
+    id_job = models.CharField(max_length=70)
+    job = models.CharField(max_length=70)
+    carpeta = models.CharField(max_length=70)
+    proceso = models.CharField(max_length=70)
+    tipo = models.CharField(max_length=70)
+    com = models.CharField(max_length=70)
+    secuencia = models.CharField(max_length=70)
+    hora = models.CharField(max_length=70)
 
 
 class Tabla_4_5(models.Model):
     """
     Tabla para guardas jobs de la sexta hora
     """
-    id_job = models.CharField(max_length=30)
-    job = models.CharField(max_length=30)
-    carpeta = models.CharField(max_length=30)
-    proceso = models.CharField(max_length=30)
-    tipo = models.CharField(max_length=30)
-    com = models.CharField(max_length=30)
-    secuencia = models.CharField(max_length=30)
-    hora = models.CharField(max_length=30)
+    id_job = models.CharField(max_length=70)
+    job = models.CharField(max_length=70)
+    carpeta = models.CharField(max_length=70)
+    proceso = models.CharField(max_length=70)
+    tipo = models.CharField(max_length=70)
+    com = models.CharField(max_length=70)
+    secuencia = models.CharField(max_length=70)
+    hora = models.CharField(max_length=70)
 
 
 class Tabla_5(models.Model):
     """
     Tabla para guardas jobs de la septima hora
     """
-    id_job = models.CharField(max_length=30)
-    job = models.CharField(max_length=30)
-    carpeta = models.CharField(max_length=30)
-    proceso = models.CharField(max_length=30)
-    tipo = models.CharField(max_length=30)
-    com = models.CharField(max_length=30)
-    secuencia = models.CharField(max_length=30)
-    hora = models.CharField(max_length=30)
+    id_job = models.CharField(max_length=70)
+    job = models.CharField(max_length=70)
+    carpeta = models.CharField(max_length=70)
+    proceso = models.CharField(max_length=70)
+    tipo = models.CharField(max_length=70)
+    com = models.CharField(max_length=70)
+    secuencia = models.CharField(max_length=70)
+    hora = models.CharField(max_length=70)
 
 
 class FechaActual(models.Model):
