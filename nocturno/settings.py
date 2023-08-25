@@ -34,7 +34,8 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['44.207.52.221']
+ALLOWED_HOSTS = ['44.207.52.221',
+                 'https://nocturno.danytorres.dev', 'nocturno.danytorres.dev']
 
 
 # Application definition
@@ -136,6 +137,7 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
